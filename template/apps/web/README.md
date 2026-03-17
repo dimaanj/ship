@@ -1,6 +1,6 @@
 # Web Component
 
-This is a [Next.js](https://nextjs.org/) web application starter,
+This is a [Next.js](https://nextjs.org/) web application starter (App Router),
 designed to streamline the development of web frontends by addressing common setup and infrastructure tasks,
 allowing developers to focus on unique features and business logic.
 
@@ -15,11 +15,11 @@ You can start the application in two ways:
 
 1. **Independent Start**: Navigate to the `web` folder and run:
    ```sh
-   pnpm run dev
+   npm run dev
    ```
 2. **Root Start**: From the root of the project, run:
    ```sh
-   pnpm start
+   npm run start
    ```
 
 ## Features

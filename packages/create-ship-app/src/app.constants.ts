@@ -19,4 +19,5 @@ export const DEPLOYMENT_SHORTCUTS = {
   render: Deployment.RENDER,
   'do-kubernetes': Deployment.DIGITAL_OCEAN_KUBERNETES,
   'aws-eks': Deployment.AWS_KUBERNETES,
+  'yandex-cloud': Deployment.YANDEX_CLOUD,
 };

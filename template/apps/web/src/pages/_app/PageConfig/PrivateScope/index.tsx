@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, ReactNode, useEffect } from 'react';
 
 import { socketService } from 'services';

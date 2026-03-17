@@ -17,7 +17,7 @@ By default, packages include `app-constants`, `shared`, `mailer`, and config pac
   /tsconfig
 ```
 
-The **shared** package is special — it contains an auto-generated typed API client that bridges `apps/api` and `apps/web`. Schemas from API resources are automatically copied to `packages/shared/src/schemas/` during codegen. Run `pnpm --filter shared generate` after any API endpoint or schema change.
+The **shared** package is special — it contains an auto-generated typed API client that bridges `apps/api` and `apps/web`. Schemas from API resources are automatically copied to `packages/shared/src/schemas/` during codegen. Run `npm run generate -w shared` after any API endpoint or schema change.
 
 ## Installation
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, ReactNode, useState } from 'react';
 import Link from 'next/link';
 import { useApiQuery } from 'hooks';

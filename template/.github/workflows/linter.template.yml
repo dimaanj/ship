@@ -15,7 +15,6 @@ permissions:
   contents: write
 
 env:
-  PNPM_VERSION: 9.5.0
   NODE_VERSION: 22.13.0
 
 jobs:
@@ -27,19 +26,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup pnpm ${{ env.PNPM_VERSION }}
-        uses: pnpm/action-setup@v3
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
       - name: Setup Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
+          cache: npm
 
       - name: Install Dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Run Linters
         uses: wearerequired/lint-action@v2

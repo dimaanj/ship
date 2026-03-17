@@ -5,7 +5,7 @@ const config = {
   USE_TEMP_DIR: process.env.USE_TEMP_DIR === 'true' || false,
   TEMP_DIR_PATH: process.env.TEMP_DIR_PATH,
   CLEANUP_TEMP_DIR: process.env.CLEANUP_TEMP_DIR === 'true' || false,
-  PNPM_SILENT: process.env.PNPM_SILENT === 'true' || false,
+  NPM_SILENT: process.env.NPM_SILENT === 'true' || false,
   PLUGINS_REPO_OWNER: process.env.PLUGINS_REPO_OWNER || 'paralect',
   PLUGINS_REPO_NAME: process.env.PLUGINS_REPO_NAME || 'ship-plugins',
 };

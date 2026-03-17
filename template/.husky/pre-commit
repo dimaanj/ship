@@ -1,2 +1,2 @@
 cd template
-pnpm exec turbo run precommit --concurrency=1
+npm exec turbo run precommit --concurrency=1

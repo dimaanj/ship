@@ -15,8 +15,8 @@ Shared ESLint configuration in [packages/eslint-config/](mdc:packages/eslint-con
 Run ESLint:
 ```bash
 # Per workspace, fix issues automatically
-pnpm --filter api eslint
-pnpm --filter web eslint
+npm run eslint -w api
+npm run eslint -w web
 ```
 
 ### Prettier
@@ -25,21 +25,21 @@ Shared Prettier config in [packages/prettier-config/index.js](mdc:packages/prett
 
 Run Prettier:
 ```bash
-pnpm --filter api prettier
-pnpm --filter web prettier
+npm run prettier -w api
+npm run prettier -w web
 ```
 
 ## Pre-commit Hooks
 
 Husky + lint-staged configured at root:
-- Run script: `pnpm prepare` (runs automatically after install)
+- Run script: `npm run prepare` (runs automatically after install)
 
 Each workspace has lint-staged configuration in their package.json
 
 Run precommit manually:
 ```bash
-pnpm --filter api precommit
-pnpm --filter web precommit
+npm run precommit -w api
+npm run precommit -w web
 ```
 
 ## Code Organization
@@ -48,8 +48,8 @@ pnpm --filter web precommit
 
 After implementing a feature, run ESLint to automatically sort and organize imports:
 ```bash
-pnpm --filter api eslint
-pnpm --filter web eslint
+npm run eslint -w api
+npm run eslint -w web
 ```
 
 ESLint is configured to automatically organize imports in the following order:

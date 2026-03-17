@@ -1,0 +1,31 @@
+name: "Staging - Web Deploy"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'apps/web/**'
+      - 'packages/**'
+      - 'deploy/app/web/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.template.yml
+    secrets: inherit
+    with:
+      service_name: "web"
+      environment: "staging"
+      docker_file_path: "apps/web/Dockerfile"
+      helm_chart_dir: "deploy/app/web"
+
+  deploy:
+    needs: build
+    uses: ./.github/workflows/deploy.template.yml
+    secrets: inherit
+    with:
+      service_name: "web"
+      environment: "staging"
+      helm_chart_dir: "deploy/app/web"
+      node_group_id: ${{ vars.YC_NODE_GROUP_ID }}
+      image_tag: ${{ needs.build.outputs.image_tag }}

@@ -1,20 +1,31 @@
-import { userService } from 'resources/users';
+import mongoose from 'mongoose';
 
-import { promiseUtil } from 'utils';
+const migration = {
+  version: 1,
+  description: 'Set isEmailVerified: false for users without it',
 
-import { Migration } from 'migrator/types';
+  async migrate() {
+    const db = mongoose.connection.db;
+    if (!db) throw new Error('Database connection not available');
 
-const migration = new Migration(1, 'Example');
+    const usersCollection = db.collection('users');
 
-migration.migrate = async () => {
-  const userIds = await userService.distinct('_id', {
-    isEmailVerified: true,
-  });
+    const cursor = usersCollection.find({ isEmailVerified: { $exists: false } });
+    const userIds: unknown[] = [];
 
-  const updateFn = (userId: string) =>
-    userService.atomic.updateOne({ _id: userId }, { $set: { isEmailVerified: false } });
+    for await (const doc of cursor) {
+      userIds.push(doc._id);
+    }
 
-  await promiseUtil.promiseLimit<string>(userIds, 50, updateFn);
+    if (!userIds.length) return;
+
+    const batchSize = 50;
+
+    for (let i = 0; i < userIds.length; i += batchSize) {
+      const batch = userIds.slice(i, i + batchSize);
+      await usersCollection.updateMany({ _id: { $in: batch } }, { $set: { isEmailVerified: false } });
+    }
+  },
 };
 
 export default migration;

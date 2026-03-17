@@ -28,7 +28,7 @@ export const createApp = async ({
   projectName,
   appPath,
   deployment,
-  packageManager = 'pnpm',
+  packageManager = 'npm',
 }: {
   projectName: string;
   appPath: string;
@@ -100,7 +100,7 @@ export const createApp = async ({
 
   const endInstallationTime = performance.now();
 
-  if (config.PNPM_SILENT) {
+  if (config.NPM_SILENT) {
     console.log(`Done in ${Number((endInstallationTime - startInstallationTime) / 1000).toFixed(1)}s`);
   }
 

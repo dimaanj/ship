@@ -25,7 +25,7 @@ The install process will:
 1. **Download** the plugin files from the [ship-plugins](https://github.com/paralect/ship-plugins) repository.
 2. **Copy files** into your project, preserving the directory structure. Existing files are never overwritten.
 3. **Merge dependencies** declared in the plugin manifest into the appropriate workspace `package.json` files.
-4. **Run post-install** — executes `pnpm install` and `pnpm run --filter shared generate` to install new dependencies and regenerate shared schemas.
+4. **Run post-install** — executes `npm install` and `npm run generate -w shared` to install new dependencies and regenerate shared schemas.
 
 ## Available plugins
 

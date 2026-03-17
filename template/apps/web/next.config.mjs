@@ -22,7 +22,6 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
   outputFileTracingRoot: join(process.cwd(), '../../'), // this includes files from the monorepo base two directories up
-  pageExtensions: ['page.tsx', 'api.ts'],
   transpilePackages: ['app-constants', 'schemas', 'types'],
   i18n: {
     locales: ['en-US'],

@@ -4,7 +4,7 @@ title: "Schemas"
 
 ## Overview
 
-Data schemas are defined inside each API resource folder (e.g. `apps/api/src/resources/users/users.schema.ts`). They are **auto-copied** to `packages/shared/src/schemas/` during codegen (`pnpm --filter shared generate`).
+Data schemas are defined inside each API resource folder (e.g. `apps/api/src/resources/users/users.schema.ts`). They are **auto-copied** to `packages/shared/src/schemas/` during codegen (`npm run generate -w shared`).
 
 **Data schema** — is a Zod 4 schema that defines shape of the entity. It extends `dbSchema` from `resources/base.schema.ts` which provides `_id`, `createdOn`, `updatedOn`, and `deletedOn` fields.
 

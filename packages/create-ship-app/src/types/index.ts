@@ -11,4 +11,5 @@ export enum Deployment {
   RENDER = 'Render',
   DIGITAL_OCEAN_KUBERNETES = 'Digital Ocean Managed Kubernetes',
   AWS_KUBERNETES = 'AWS EKS',
+  YANDEX_CLOUD = 'Yandex Cloud',
 }

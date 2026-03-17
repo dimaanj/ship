@@ -1,0 +1,12 @@
+service: api
+port: 3001
+domain: staging-api.example.com
+image: cr.yandex/REGISTRY_ID/api
+environment:
+  APP_ENV: staging
+  API_URL: https://staging-api.example.com
+  WEB_URL: https://staging.example.com
+  MONGO_URI: CHANGE_ME
+  MONGO_DB_NAME: api-staging
+nodeGroupId: CHANGE_ME
+migratorImage: cr.yandex/REGISTRY_ID/migrator

@@ -6,43 +6,27 @@
 
 ## Architecture at a Glance
 
-Next.js 15, Pages Router, React 19, Tailwind CSS 4, shadcn/ui (New York, no RSC), TanStack React Query v5, React Hook Form v7, Zod 4.
+Next.js 15, App Router, React 19, Tailwind CSS 4, shadcn/ui (New York), TanStack React Query v5, React Hook Form v7, Zod 4.
 
 ---
 
-## Routing: Pages Router with Custom Extension
+## Routing: App Router
 
-**Only files matching `*.page.tsx` or `*.api.ts` are routes** (set in `next.config.mjs` → `pageExtensions`).
+Routes are defined in `src/app/` with `page.tsx`, `layout.tsx`, and `route.ts` files.
 
-This means:
+- `app/(auth)/sign-in/page.tsx` → `/sign-in`
+- `app/(dashboard)/app/page.tsx` → `/app`
+- `app/(dashboard)/app/profile/page.tsx` → `/app/profile`
+- `app/posts/[slug]/page.tsx` → `/posts/:slug`
 
-- `pages/projects/index.page.tsx` ✅ → `/projects`
-- `pages/projects/[id].page.tsx` ✅ → `/projects/:id`
-- `pages/projects/index.tsx` ❌ → not a route (invisible to Next.js)
-- `pages/projects/components/Card.tsx` ✅ → correctly ignored (no `.page.tsx`)
-
-Helper components, hooks, and constants in page folders are safe — they won't become routes.
+Route groups like `(auth)` and `(dashboard)` don't add to the URL path. Layouts wrap child routes.
 
 ---
 
-## Page Template
+## Layouts and Auth
 
-```tsx
-import Head from 'next/head';
-import { LayoutType, Page, ScopeType } from 'components';
-
-const MyPage = () => (
-  <Page scope={ScopeType.PRIVATE} layout={LayoutType.MAIN}>
-    <Head>
-      <title>My Page</title>
-    </Head>
-    <div className="p-4 sm:p-6">{/* content */}</div>
-  </Page>
-);
-export default MyPage;
-```
-
-`<Page>` wrapper is **required**. It handles auth gating, layout selection, and account fetching.
+- `app/(auth)/layout.tsx` — redirects logged-in users to `/app`
+- `app/(dashboard)/layout.tsx` — requires auth, redirects to `/sign-in` if not logged in, wraps with MainLayout
 
 ---
 
@@ -95,9 +79,9 @@ Add new shadcn components via: `npx shadcn@latest add <component>` (from `apps/w
 ## Verification
 
 ```bash
-pnpm --filter web tsc --noEmit    # typecheck
-pnpm --filter web eslint .        # lint
-pnpm --filter web build           # full build (catches SSR issues)
+npm run tsc --noEmit -w web    # typecheck
+npm run eslint -w web         # lint
+npm run build -w web          # full build (catches SSR issues)
 ```
 
 ---

@@ -65,11 +65,9 @@
     "update-check": "1.5.4",
     "validate-npm-package-name": "3.0.0"
   },
-  "pnpm": {
-    "overrides": {
-      "braces@<=3.0.3": "3.0.3",
-      "micromatch@<=4.0.8": "4.0.8"
-    }
+  "overrides": {
+    "braces": "3.0.3",
+    "micromatch": "4.0.8"
   },
   "lint-staged": {
     "*.ts": [

@@ -7,7 +7,7 @@
 ## Prerequisites
 
 - **Node ≥22.13.0** (see `.nvmrc`). Use `nvm use` if needed.
-- **pnpm ≥9.5.0** (`corepack enable && corepack prepare pnpm@9.5.0 --activate`).
+- **npm** (comes with Node.js).
 - **Docker** for local MongoDB + Redis.
 
 ---
@@ -15,17 +15,17 @@
 ## Install
 
 ```bash
-pnpm install
+npm install
 ```
 
-Run after pulling, after changing any `package.json`, or after modifying `pnpm-workspace.yaml` catalog.
+Run after pulling, after changing any `package.json`, or after modifying workspace packages.
 
 ---
 
 ## Infrastructure (Local)
 
 ```bash
-pnpm infra          # starts MongoDB (27017) + Redis (6379) via Docker
+npm run infra          # starts MongoDB (27017) + Redis (6379) via Docker
 ```
 
 MongoDB runs as a replica set (`rs`) — required for change streams and transactions.
@@ -36,17 +36,17 @@ MongoDB runs as a replica set (`rs`) — required for change streams and transac
 
 ```bash
 # Everything at once (infra → migrate → schedule → api + web dev):
-pnpm start
+npm run start
 
 # Or with Turborepo (assumes infra already running):
-pnpm turbo-start
+npm run turbo-start
 ```
 
 Individual apps:
 
 ```bash
-pnpm --filter api dev       # API on :3001 (tsx watch)
-pnpm --filter web dev       # Web on :3002 (next dev)
+npm run dev -w api       # API on :3001 (nest start --watch)
+npm run dev -w web       # Web on :3002 (next dev)
 ```
 
 Turbo pipeline order: `api#migrate-dev` → `api#schedule-dev` → `dev` (all apps).
@@ -56,9 +56,9 @@ Turbo pipeline order: `api#migrate-dev` → `api#schedule-dev` → `dev` (all ap
 ## Build
 
 ```bash
-pnpm turbo build            # builds all packages + apps
-pnpm --filter api build     # API only (tsc)
-pnpm --filter web build     # Web only (next build)
+npx turbo build            # builds all packages + apps
+npm run build -w api       # API only (nest build)
+npm run build -w web       # Web only (next build)
 ```
 
 ---
@@ -66,9 +66,9 @@ pnpm --filter web build     # Web only (next build)
 ## Typecheck
 
 ```bash
-pnpm --filter api tsc --noEmit
-pnpm --filter web tsc --noEmit
-pnpm --filter shared tsc --noEmit
+npm exec -w api tsc --noEmit
+npm exec -w web tsc --noEmit
+npm exec -w shared tsc --noEmit
 ```
 
 No project-wide `tsc` — run per-package. These are the verification commands to run after changes.
@@ -78,8 +78,8 @@ No project-wide `tsc` — run per-package. These are the verification commands t
 ## Lint
 
 ```bash
-pnpm --filter api eslint .
-pnpm --filter web eslint .
+npm run eslint -w api
+npm run eslint -w web
 ```
 
 Uses `@antfu/eslint-config` (flat config, ESLint 9). Key enforced rules:
@@ -94,8 +94,8 @@ Run `eslint . --fix` to auto-fix. Don't fight the linter — if it's enforced, c
 ## Codegen
 
 ```bash
-pnpm --filter shared generate          # one-shot
-pnpm --filter shared generate:watch    # watches API resources for changes
+npm run generate -w shared          # one-shot
+npm run generate:watch -w shared   # watches API resources for changes
 ```
 
 Must run after any change to `apps/api/src/resources/*/endpoints/*.ts` or `*.schema.ts`.
@@ -107,26 +107,26 @@ See `agent_docs/shared_codegen_contract.md` for details.
 
 | I changed... | Run |
 |---|---|
-| Any `package.json` or catalog | `pnpm install` |
-| API endpoint or schema file | `pnpm --filter shared generate`, then typecheck |
-| API code (any) | `pnpm --filter api tsc --noEmit` |
-| Web code (any) | `pnpm --filter web tsc --noEmit` |
-| Shared package code | `pnpm --filter shared tsc --noEmit`, then typecheck consumers |
+| Any `package.json` or catalog | `npm install` |
+| API endpoint or schema file | `npm run generate -w shared`, then typecheck |
+| API code (any) | `npm exec -w api tsc --noEmit` |
+| Web code (any) | `npm exec -w web tsc --noEmit` |
+| Shared package code | `npm exec -w shared tsc --noEmit`, then typecheck consumers |
 | `app-constants` | Typecheck any package that imports it |
-| Before committing | `pnpm --filter api tsc --noEmit && pnpm --filter web tsc --noEmit` |
+| Before committing | `npm exec -w api tsc --noEmit && npm exec -w web tsc --noEmit` |
 
 ---
 
 ## Turborepo Filter Patterns
 
 ```bash
-pnpm --filter api <script>        # apps/api
-pnpm --filter web <script>        # apps/web
-pnpm --filter shared <script>     # packages/shared
-pnpm --filter app-constants <script>
+npm run <script> -w api          # apps/api
+npm run <script> -w web          # apps/web
+npm run <script> -w shared       # packages/shared
+npm run <script> -w app-constants
 ```
 
-Package names match their `package.json` `name` field. Check with `pnpm ls --depth -1` if unsure.
+Package names match their `package.json` `name` field. Check with `npm ls --depth -1` if unsure.
 
 ---
 
@@ -135,5 +135,5 @@ Package names match their `package.json` `name` field. Check with `pnpm ls --dep
 Update this doc when:
 - Root or app-level `package.json` scripts change
 - `turbo.json` pipeline tasks change
-- Node/pnpm version requirements change
+- Node/npm version requirements change
 - New packages are added to the workspace

@@ -130,11 +130,11 @@ export const installPlugin = async (pluginName: string): Promise<void> => {
   // 4. Post-install: install deps + regenerate shared schemas
   console.log(bold('\nRunning post-install...'));
 
-  console.log(cyan('  $ pnpm install'));
-  await runCommand(root, 'pnpm install');
+  console.log(cyan('  $ npm install'));
+  await runCommand(root, 'npm install');
 
-  console.log(cyan('  $ pnpm run --filter shared generate'));
-  await runCommand(root, 'pnpm run --filter shared generate');
+  console.log(cyan('  $ npm run generate -w shared'));
+  await runCommand(root, 'npm run generate -w shared');
 
   console.log(bold(green(`\n✓ Plugin "${pluginName}" installed successfully!\n`)));
 };

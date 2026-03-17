@@ -1,0 +1,5 @@
+service: web
+port: 3002
+domain: staging.example.com
+image: cr.yandex/REGISTRY_ID/web
+nodeGroupId: CHANGE_ME

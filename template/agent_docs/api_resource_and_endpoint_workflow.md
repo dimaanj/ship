@@ -29,8 +29,8 @@ Search existing resources for reference: `grep -r "createEndpoint" apps/api/src/
 - [ ] **Create service** via `db.createService<T>(DATABASE_DOCUMENTS.NAME, { schemaValidator: (obj) => schema.parseAsync(obj) })`
 - [ ] **Create barrel** `index.ts` — export service; if handler exists, `import './name.handler'` at top (side-effect)
 - [ ] **Create endpoint files** in `endpoints/` — each must **default-export** `createEndpoint({...})`
-- [ ] **Run codegen**: `pnpm --filter shared generate`
-- [ ] **Verify**: `pnpm --filter api tsc --noEmit`
+- [ ] **Run codegen**: `npm --filter shared generate`
+- [ ] **Verify**: `npm --filter api tsc --noEmit`
 - [ ] **Check startup logs**: `[routes] POST /projects`, etc.
 
 ---

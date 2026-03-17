@@ -1,0 +1,23 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: {{ printf "%s-%s"  migrator (randAlpha 8) | lower | quote }}
+  annotations:
+    helm.sh/hook: pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrator
+          image: {{ .Values.migratorImage }}
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: api-{{ .Values.environment }}-secret
+      nodeSelector:
+        yandex.cloud/node-group-id: {{ .Values.nodeGroupId }}
+  backoffLimit: 0
+  activeDeadlineSeconds: 1800
+  ttlSecondsAfterFinished: 3600

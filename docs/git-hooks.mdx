@@ -10,7 +10,7 @@ Ship uses [Husky](https://typicode.github.io/husky/) and [lint-staged](https://g
 When you commit changes, Husky triggers a pre-commit hook that runs lint-staged. The configuration runs linters on the **entire project** to ensure project-wide code quality.
 
 <Info>
-  The pre-commit hook is automatically installed when you run `pnpm install` via the `prepare` script.
+  The pre-commit hook is automatically installed when you run `npm install` via the `prepare` script.
 </Info>
 
 <Note>
@@ -133,7 +133,7 @@ If pre-commit hooks don't run:
 
 1. Ensure Husky is installed:
 ```bash
-pnpm install
+npm install
 ```
 
 2. Check if `.husky/pre-commit` exists in your project root

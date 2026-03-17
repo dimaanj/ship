@@ -1,44 +1,43 @@
 ---
-description: Guidelines for pnpm workspace management, installing packages and workspace dependencies
+description: Guidelines for npm workspace management, installing packages and workspace dependencies
 alwaysApply: false
 ---
 # Package Management Rules
 
-## Package Manager: pnpm
+## Package Manager: npm
 
-This project uses **pnpm** as the package manager. Never use npm or yarn.
+This project uses **npm** as the package manager. Never use pnpm or yarn.
 
 ### Installing Packages
 
-**Always use the workspace filter flag when adding packages to specific apps or packages.**
+**Always use the workspace flag when adding packages to specific apps or packages.**
 
 Examples:
 ```bash
 # Add a package to the api app
-pnpm add stripe --filter api
+npm install stripe -w api
 
 # Add a dev dependency to the web app
-pnpm add -D @types/lodash --filter web
+npm install -D @types/lodash -w web
 
 # Add a package to a shared package
-pnpm add lodash --filter app-constants
+npm install lodash -w app-constants
 
-# Add a package to all workspaces
-pnpm add -w zod
+# Add a package to all workspaces (root)
+npm install zod -w .
 
-# Add a package to the root workspace
-pnpm add -w -D husky
+# Add a dev dependency to the root workspace
+npm install -D husky -w .
 ```
 
 ### Workspace Dependencies
 
-When referencing internal packages, use the `workspace:*` protocol in package.json:
+When referencing internal packages, use `*` in package.json (npm workspaces resolve them):
 ```json
 {
   "dependencies": {
-    "app-constants": "workspace:*",
-    "app-types": "workspace:*",
-    "schemas": "workspace:*"
+    "app-constants": "*",
+    "shared": "*"
   }
 }
 ```

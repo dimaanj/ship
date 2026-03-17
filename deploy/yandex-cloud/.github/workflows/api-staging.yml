@@ -1,0 +1,62 @@
+name: "Staging - API Services Deploy"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'apps/api/**'
+      - 'packages/**'
+      - 'deploy/app/api/**'
+      - 'deploy/app/scheduler/**'
+  workflow_dispatch:
+
+jobs:
+  build-api:
+    uses: ./.github/workflows/build.template.yml
+    secrets: inherit
+    with:
+      service_name: "api"
+      environment: "staging"
+      docker_file_path: "apps/api/Dockerfile"
+      helm_chart_dir: "deploy/app/api"
+
+  build-migrator:
+    uses: ./.github/workflows/build.template.yml
+    secrets: inherit
+    with:
+      service_name: "migrator"
+      environment: "staging"
+      docker_file_path: "apps/api/Dockerfile.migrator"
+      helm_chart_dir: "deploy/app/api"
+
+  build-scheduler:
+    uses: ./.github/workflows/build.template.yml
+    secrets: inherit
+    with:
+      service_name: "scheduler"
+      environment: "staging"
+      docker_file_path: "apps/api/Dockerfile.scheduler"
+      helm_chart_dir: "deploy/app/scheduler"
+
+  deploy-api:
+    needs: [build-api, build-migrator]
+    uses: ./.github/workflows/deploy.template.yml
+    secrets: inherit
+    with:
+      service_name: "api"
+      environment: "staging"
+      helm_chart_dir: "deploy/app/api"
+      node_group_id: ${{ vars.YC_NODE_GROUP_ID }}
+      image_tag: ${{ needs.build-api.outputs.image_tag }}
+      migrator_image_tag: ${{ needs.build-migrator.outputs.image_tag }}
+
+  deploy-scheduler:
+    needs: [build-scheduler, deploy-api]
+    uses: ./.github/workflows/deploy.template.yml
+    secrets: inherit
+    with:
+      service_name: "scheduler"
+      environment: "staging"
+      helm_chart_dir: "deploy/app/scheduler"
+      node_group_id: ${{ vars.YC_NODE_GROUP_ID }}
+      image_tag: ${{ needs.build-scheduler.outputs.image_tag }}

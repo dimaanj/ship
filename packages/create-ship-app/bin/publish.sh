@@ -27,8 +27,8 @@ echo ">>> Publishing module: $MODULE"
 echo ">>> Removing node_modules and dist in $MODULE"
 rm -rf node_modules && rm -rf dist
 
-echo ">>> pnpm install for $MODULE"
-pnpm install 1>/dev/null
+echo ">>> npm install for $MODULE"
+npm install 1>/dev/null
 
 MODULE_VERSION=$(grep version package.json | sed 's/.*"version": "\(.*\)".*/\1/')
 
@@ -36,8 +36,8 @@ echo ">>> Current version for module: ${blue}$MODULE${reset} is ${yellow}$MODULE
 echo ">>> Bumping version to ${yellow}$VERSION${reset}"
 npm version $VERSION
 
-echo ">>> pnpm run build"
-pnpm run build 1>/dev/null
+echo ">>> npm run build"
+npm run build 1>/dev/null
 
 echo ">>> npm publish"
 npm publish

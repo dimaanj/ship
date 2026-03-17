@@ -18,21 +18,21 @@
   "dependencies": {
     "@react-email/components": "1.0.1",
     "@react-email/render": "2.0.0",
-    "react": "catalog:",
-    "react-dom": "catalog:"
+    "react": "19.0.3",
+    "react-dom": "19.0.3"
   },
   "devDependencies": {
     "@react-email/preview-server": "5.0.8",
-    "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "eslint": "catalog:",
-    "eslint-config": "workspace:*",
-    "lint-staged": "catalog:",
-    "prettier": "catalog:",
-    "prettier-config": "workspace:*",
+    "@types/node": "22.10.10",
+    "@types/react": "19.0.14",
+    "eslint": "9.34.0",
+    "eslint-config": "*",
+    "lint-staged": "16.1.2",
+    "prettier": "3.6.2",
+    "prettier-config": "*",
     "react-email": "5.0.8",
-    "tsconfig": "workspace:*",
-    "typescript": "catalog:"
+    "tsconfig": "*",
+    "typescript": "5.8.3"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

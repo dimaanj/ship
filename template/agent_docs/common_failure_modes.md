@@ -7,7 +7,7 @@
 ## 1. "Module not found" for a new endpoint/type in web
 
 **Cause**: Codegen not run after API changes.
-**Fix**: `pnpm --filter shared generate && pnpm --filter web tsc --noEmit`
+**Fix**: `npm run generate -w shared && npm exec -w web tsc --noEmit`
 
 ## 2. Page exists but returns 404 in browser
 
@@ -46,8 +46,8 @@
 
 ## 9. "Command not found: npm" / wrong package manager
 
-**Cause**: Using npm or yarn. This repo requires pnpm.
-**Fix**: `pnpm install`. The `engines` field in root `package.json` enforces `pnpm ≥9.5.0` and rejects yarn.
+**Cause**: Using pnpm or yarn. This repo requires npm.
+**Fix**: `npm install`.
 
 ## 10. Env var undefined at runtime
 
@@ -57,17 +57,17 @@
 ## 11. Type errors after editing `packages/shared/src/schemas/*` or `src/generated/*`
 
 **Cause**: These files are auto-generated and overwritten by codegen.
-**Fix**: Don't edit them. Edit the source in `apps/api/src/resources/`, then run `pnpm --filter shared generate`.
+**Fix**: Don't edit them. Edit the source in `apps/api/src/resources/`, then run `npm run generate -w shared`.
 
 ## 12. `eslint` reports import order violations
 
 **Cause**: ESLint enforces strict import ordering via `simple-import-sort` with custom groups.
-**Fix**: Run `pnpm --filter <package> eslint . --fix`. Don't hand-sort imports.
+**Fix**: Run `npm run eslint -w <package>`. Don't hand-sort imports.
 
 ## 13. MongoDB connection fails locally
 
 **Cause**: Docker infrastructure not running. MongoDB requires replica set initialization.
-**Fix**: `pnpm infra` — starts MongoDB + Redis + replica set initializer.
+**Fix**: `npm run infra` — starts MongoDB + Redis + replica set initializer.
 
 ## 14. Handler/event bus side effects not firing
 

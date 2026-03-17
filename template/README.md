@@ -1,6 +1,6 @@
 # Ship
 
-> Full-Stack Node.js boilerplate — [Next.js](https://nextjs.org/) (Pages Router) + [Koa.js](https://koajs.com/) + [MongoDB](https://www.mongodb.com/) + [TypeScript](https://www.typescriptlang.org/)
+> Full-Stack Node.js boilerplate — [Next.js](https://nextjs.org/) (App Router) + [NestJS](https://nestjs.com/) + [MongoDB](https://www.mongodb.com/) + [TypeScript](https://www.typescriptlang.org/)
 
 ## [Documentation](https://ship.paralect.com/docs/introduction)
 
@@ -8,16 +8,16 @@
 
 | Layer | Technologies |
 |---|---|
-| **Web** | Next.js (Pages Router), Tanstack Query, React Hook Form, Tailwind CSS, shadcn/ui |
-| **API** | Koa.js, Zod validation, auto-discovered endpoints |
-| **Database** | MongoDB with [@paralect/node-mongo](https://ship.paralect.com/docs/packages/node-mongo) |
+| **Web** | Next.js (App Router), Tanstack Query, React Hook Form, Tailwind CSS, shadcn/ui |
+| **API** | NestJS, Zod validation, Mongoose |
+| **Database** | MongoDB with Mongoose |
 | **Shared** | Auto-generated typed API client, Zod schemas |
 | **Infra** | Docker, Turborepo, Redis, GitHub Actions |
-| **Deployment** | Digital Ocean Apps, Render, Kubernetes (DO / AWS EKS) |
+| **Deployment** | Yandex Cloud, Digital Ocean Apps, Render, Kubernetes |
 
 ## Prerequisites
 
-This project requires specific versions of Node.js and pnpm. Please check the `engines` and `packageManager` fields in `package.json` for the required versions.
+This project requires Node.js ≥22.13.0 and npm. Please check the `engines` field in `package.json` for the required versions.
 
 ### Node.js
 
@@ -28,43 +28,40 @@ nvm use
 
 This will read the version from the `.nvmrc` file and switch to it automatically.
 
-### pnpm
+### npm
 
-If you have [Corepack](https://nodejs.org/api/corepack.html) enabled (included with Node.js 16.10+), pnpm will automatically use the version specified in the `packageManager` field of `package.json`. You can enable Corepack by running:
-```sh
-corepack enable
-```
+npm comes bundled with Node.js. No additional setup required.
 
 ## Starting Application with Turborepo 🚀
 
 To run the infrastructure and all services -- just run:
 ```sh
-pnpm start
+npm run start
 ```
 
 ### Running Infra and Services Separately with Turborepo
 
 1. Start base infrastructure services in Docker containers:
     ```sh
-    pnpm run infra
+    npm run infra
     ```
 2. Run the services with Turborepo:
     ```sh
-    pnpm run turbo-start
+    npm run turbo-start
     ```
 
 ## Using Ship with Docker
 
 To run the infrastructure and all services, execute:
 ```sh
-pnpm run docker
+npm run docker
 ```
 
 ### Running Infra and Services Separately with Docker
 
 1. Start base infrastructure services in Docker containers:
     ```sh
-    pnpm run infra
+    npm run infra
     ```
 2. Run the services you need:
     ```sh

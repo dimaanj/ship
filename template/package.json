@@ -1,8 +1,13 @@
 {
   "name": "ship",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "infra": "bash ./bin/start.sh mongo redis mongo-replicator",
-    "turbo-start": "turbo run development",
+    "turbo-start": "npx turbo run development",
     "docker": "bash ./bin/start.sh",
     "start": "bash ./bin/run-all.sh",
     "prepare": "cd .. && husky template/.husky"
@@ -11,18 +16,7 @@
     "husky": "9.0.11",
     "turbo": "2.5.4"
   },
-  "optionalDependencies": {
-    "turbo-darwin-64": "2.5.4",
-    "turbo-darwin-arm64": "2.5.4",
-    "turbo-linux-64": "2.5.4",
-    "turbo-linux-arm64": "2.5.4",
-    "turbo-windows-64": "2.5.4",
-    "turbo-windows-arm64": "2.5.4"
-  },
-  "packageManager": "pnpm@9.5.0",
   "engines": {
-    "node": ">= 22.13.0",
-    "yarn": "please-use-pnpm",
-    "pnpm": ">= 9.5.0"
+    "node": ">= 22.13.0"
   }
 }

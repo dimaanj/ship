@@ -74,6 +74,19 @@ export const deploymentInstaller = async (deployment: Deployment, options: Deplo
         break;
       }
 
+      case Deployment.YANDEX_CLOUD: {
+        const workflowsSrc = path.join(templatePath, 'yandex-cloud/.github/workflows');
+        const workflowsDest = path.join(projectRoot, '.github/workflows');
+
+        await fs.cp(workflowsSrc, workflowsDest, { recursive: true });
+
+        const deploySrc = path.join(templatePath, 'yandex-cloud/deploy');
+        const deployDest = path.join(projectRoot, 'deploy');
+
+        await fs.cp(deploySrc, deployDest, { recursive: true });
+        break;
+      }
+
       default:
         break;
     }

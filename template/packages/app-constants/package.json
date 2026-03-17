@@ -11,14 +11,14 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
-    "@types/node": "catalog:",
-    "eslint": "catalog:",
-    "eslint-config": "workspace:*",
-    "lint-staged": "catalog:",
-    "prettier": "catalog:",
-    "prettier-config": "workspace:*",
-    "tsconfig": "workspace:*",
-    "typescript": "catalog:"
+    "@types/node": "22.10.10",
+    "eslint": "9.34.0",
+    "eslint-config": "*",
+    "lint-staged": "16.1.2",
+    "prettier": "3.6.2",
+    "prettier-config": "*",
+    "tsconfig": "*",
+    "typescript": "5.8.3"
   },
   "lint-staged": {
     "*.ts": [

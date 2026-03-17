@@ -80,12 +80,11 @@ Linting uses a reusable template workflow that runs ESLint, TypeScript, and Pret
 
 **File**: `.github/workflows/linter.template.yml`
 
-Reusable workflow for running linters with pnpm and Node.js.
+Reusable workflow for running linters with npm and Node.js.
 
 <CodeGroup>
 ```yaml Environment
 env:
-  PNPM_VERSION: 9.5.0
   NODE_VERSION: 22.13.0
 ```
 
@@ -134,13 +133,12 @@ jobs:
 
 ## Customization
 
-### Update Node.js/pnpm Versions
+### Update Node.js Version
 
 Edit `.github/workflows/linter.template.yml`:
 
 ```yaml
 env:
-  PNPM_VERSION: 9.5.0    # Update version
   NODE_VERSION: 22.13.0  # Update version
 ```
 

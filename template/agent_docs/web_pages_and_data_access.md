@@ -135,9 +135,9 @@ Query keys = `[endpoint.path, ...params]`. The first element is always the endpo
 
 After web changes:
 ```bash
-pnpm --filter web tsc --noEmit    # type errors
-pnpm --filter web eslint .        # lint
-pnpm --filter web build           # full build passes
+npm --filter web tsc --noEmit    # type errors
+npm --filter web eslint .        # lint
+npm --filter web build           # full build passes
 ```
 
 ---

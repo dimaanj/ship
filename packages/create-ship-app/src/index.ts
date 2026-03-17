@@ -56,6 +56,7 @@ Available deployment options:
   render             Render
   do-kubernetes      Digital Ocean Managed Kubernetes
   aws-eks            AWS EKS
+  yandex-cloud       Yandex Cloud
 `,
   )
   .allowUnknownOption();
@@ -191,6 +192,7 @@ const run = async (): Promise<void> => {
         { title: Deployment.RENDER, value: Deployment.RENDER },
         { title: Deployment.DIGITAL_OCEAN_KUBERNETES, value: Deployment.DIGITAL_OCEAN_KUBERNETES },
         { title: Deployment.AWS_KUBERNETES, value: Deployment.AWS_KUBERNETES },
+        { title: Deployment.YANDEX_CLOUD, value: Deployment.YANDEX_CLOUD },
       ],
     });
 
@@ -240,7 +242,7 @@ const notifyUpdate = async (): Promise<void> => {
     const res = await update;
 
     if (res?.latest) {
-      const updateMessage = 'pnpm add -g create-ship-app';
+      const updateMessage = 'npm install -g create-ship-app';
 
       console.log(
         `${yellow(bold('A new version of `create-ship-app` is available!'))}\n` +

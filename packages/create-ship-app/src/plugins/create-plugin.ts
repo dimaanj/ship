@@ -15,6 +15,7 @@ interface PackageJsonDiff {
 
 const IGNORED_FILES = [
   'pnpm-lock.yaml',
+  'package-lock.json',
   'packages/shared/src/generated/',
   'packages/shared/src/schemas/',
 ];

@@ -1,6 +1,6 @@
 # AGENTS.md — Ship Monorepo
 
-> pnpm monorepo (Turborepo): `apps/api` (Koa + MongoDB), `apps/web` (Next.js Pages Router), `packages/shared` (auto-generated typed API client), plus `app-constants`, `mailer`, config packages.
+> npm monorepo (Turborepo): `apps/api` (NestJS + MongoDB), `apps/web` (Next.js App Router), `packages/shared` (auto-generated typed API client), plus `app-constants`, `mailer`, config packages.
 
 ---
 
@@ -36,37 +36,37 @@
 
 ```bash
 # Install (always after pulling or changing deps)
-pnpm install
+npm install
 
 # Start infra (MongoDB + Redis via Docker)
-pnpm infra
+npm run infra
 
 # Start everything (infra → migrator → scheduler → api + web)
-pnpm start
+npm run start
 
 # Dev mode (with Turborepo — runs migrate, schedule, then dev for all apps)
-pnpm turbo-start
+npm run turbo-start
 
 # Build all
-pnpm turbo build
+npx turbo build
 
 # Typecheck (per-package)
-pnpm --filter api tsc --noEmit
-pnpm --filter web tsc --noEmit
+npm exec -w api tsc --noEmit
+npm exec -w web tsc --noEmit
 
 # Lint (per-package)
-pnpm --filter api eslint .
-pnpm --filter web eslint .
+npm run eslint -w api
+npm run eslint -w web
 
 # Regenerate shared typed client (REQUIRED after any API endpoint/schema change)
-pnpm --filter shared generate
+npm run generate -w shared
 ```
 
 ---
 
 ## Never Do
 
-- **Use npm or yarn.** `engines` block rejects them. pnpm ≥9.5.0 only.
+- **Use pnpm or yarn.** This project uses npm only.
 - **Use Node < 22.13.0.** See `.nvmrc`.
 - **Hand-edit `packages/shared/src/generated/`** or `packages/shared/src/schemas/`. These are overwritten by codegen.
 - **Forget to run codegen** after changing any `*.schema.ts` or `endpoints/*.ts` in the API.
@@ -83,9 +83,9 @@ pnpm --filter shared generate
 
 Every change must pass before submission:
 
-- [ ] `pnpm --filter <affected-package> tsc --noEmit` — no type errors
-- [ ] `pnpm --filter <affected-package> eslint .` — no lint errors
-- [ ] If API endpoints/schemas changed → `pnpm --filter shared generate` ran and output committed
+- [ ] `npm exec -w <affected-package> tsc --noEmit` — no type errors
+- [ ] `npm run eslint -w <affected-package>` — no lint errors
+- [ ] If API endpoints/schemas changed → `npm run generate -w shared` ran and output committed
 - [ ] If new env vars → added to `.env.example` AND the Zod config schema
 - [ ] Spot-check: the feature works (dev server loads, endpoint responds, page renders)
 

@@ -1,0 +1,86 @@
+name: "Deploy Template"
+
+on:
+  workflow_call:
+    inputs:
+      service_name:
+        type: string
+        description: 'Service identifier (e.g., "api", "web")'
+        required: true
+      node_group_id:
+        type: string
+        description: 'Yandex Cloud node group ID for pod scheduling'
+        required: true
+      environment:
+        type: string
+        description: 'Target deployment environment (staging/production)'
+        required: true
+      helm_chart_dir:
+        type: string
+        description: 'Path to Helm chart configuration directory'
+        required: true
+      image_tag:
+        type: string
+        description: 'Docker image tag to deploy for the service'
+        required: true
+      migrator_image_tag:
+        type: string
+        description: 'Optional Docker image tag for database migrations'
+        required: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      KUBECONFIG: .kube/kubeconfig
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install helm-diff plugin
+        run: helm plugin install https://github.com/databus23/helm-diff
+
+      - name: Install Yandex Cloud CLI
+        run: |
+          curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash -s -- -i /opt/yc -n
+          echo "/opt/yc/bin" >> $GITHUB_PATH
+
+      - name: Authenticate with Yandex Cloud
+        run: |
+          echo '${{ secrets.YC_SA_KEY }}' > sa-key.json
+          yc config set service-account-key sa-key.json
+          yc config set cloud-id ${{ secrets.YC_CLOUD_ID }}
+          yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
+          rm sa-key.json
+
+      - name: Get kubeconfig
+        run: |
+          mkdir -p .kube
+          yc managed-kubernetes cluster get-credentials ${{ secrets.YC_CLUSTER_ID }} --external --kubeconfig ${{ env.KUBECONFIG }}
+
+      - name: helm diff
+        run: |
+          helm dependency build ${{ inputs.helm_chart_dir }}
+          helm diff upgrade --install \
+          apps-${{ inputs.environment }}-${{ inputs.service_name }} ${{ inputs.helm_chart_dir }} \
+          --namespace ${{ inputs.environment }} \
+          --set environment=${{ inputs.environment }} \
+          --set image=${{ inputs.image_tag }} \
+          --set migratorImage=${{ inputs.migrator_image_tag }} \
+          --set nodeGroupId=${{ inputs.node_group_id }} \
+          -f ${{ inputs.helm_chart_dir }}/${{ inputs.environment }}.yaml \
+          --kubeconfig ${{ env.KUBECONFIG }}
+
+      - name: helm upgrade
+        run: |
+          KUBECONFIG=$PWD/$KUBECONFIG helm upgrade --install \
+          --create-namespace \
+          apps-${{ inputs.environment }}-${{ inputs.service_name }} ${{ inputs.helm_chart_dir }} \
+          --namespace ${{ inputs.environment }} \
+          --set environment=${{ inputs.environment }} \
+          --set image=${{ inputs.image_tag }} \
+          --set migratorImage=${{ inputs.migrator_image_tag }} \
+          --set nodeGroupId=${{ inputs.node_group_id }} \
+          -f ${{ inputs.helm_chart_dir }}/${{ inputs.environment }}.yaml \
+          --dependency-update \
+          --kubeconfig ${{ env.KUBECONFIG }} --wait --wait-for-jobs

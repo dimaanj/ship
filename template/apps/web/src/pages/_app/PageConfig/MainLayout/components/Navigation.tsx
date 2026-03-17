@@ -1,5 +1,7 @@
+'use client';
+
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { Home, Users } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -9,9 +11,7 @@ interface NavigationProps {
 }
 
 const Navigation = ({ isCollapsed }: NavigationProps) => {
-  const router = useRouter();
-
-  const currentPath = router.pathname;
+  const currentPath = usePathname();
 
   return (
     <div className="flex flex-col gap-1 p-2">

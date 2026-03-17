@@ -1,6 +1,6 @@
 # API Component
 
-A fully featured [Koa.JS](https://koajs.com/) RESTful API starter application
+A fully featured [NestJS](https://nestjs.com/) RESTful API starter application
 designed to handle routine tasks, so you can focus on your product's business logic.
 
 For more detailed information,
@@ -22,11 +22,11 @@ You can start the application in two ways:
 
 1. **Independent Start**: Navigate to the `api` folder and run:
    ```sh
-   pnpm run dev
+   npm run dev
    ```
 2. **Root Start**: From the root of the project, run:
    ```sh
-   pnpm start
+   npm run start
    ```
 
 ## Features

@@ -18,15 +18,15 @@ The script `packages/shared/scripts/generate.ts` bridges API → Web with zero m
 ## Commands
 
 ```bash
-pnpm --filter shared generate          # one-shot (CI, after changes)
-pnpm --filter shared generate:watch    # dev mode (watches API resources)
+npm run generate -w shared          # one-shot (CI, after changes)
+npm run generate:watch -w shared    # dev mode (watches API resources)
 ```
 
 ---
 
 ## When to Run
 
-Run `pnpm --filter shared generate` after **any** of:
+Run `npm run generate -w shared` after **any** of:
 - Adding, removing, or modifying files in `apps/api/src/resources/*/endpoints/`
 - Adding or modifying `*.schema.ts` files in API resources
 - Changing an endpoint's method, path, schema, or handler return type
@@ -62,7 +62,7 @@ Symptoms:
 - Import from `'shared'` can't find a `*Params` or `*Response` type
 - Endpoint exists in API but `apiClient` doesn't have it
 
-Fix: `pnpm --filter shared generate`, then `pnpm --filter web tsc --noEmit`.
+Fix: `npm run generate -w shared`, then `npm exec -w web tsc --noEmit`.
 
 ---
 
@@ -92,9 +92,9 @@ schemas.account.signUp        // Zod schema
 ## Verification
 
 ```bash
-pnpm --filter shared generate         # regenerate
-pnpm --filter shared tsc --noEmit     # shared compiles
-pnpm --filter web tsc --noEmit        # web compiles with new types
+npm run generate -w shared         # regenerate
+npm exec -w shared tsc --noEmit    # shared compiles
+npm exec -w web tsc --noEmit       # web compiles with new types
 ```
 
 ---

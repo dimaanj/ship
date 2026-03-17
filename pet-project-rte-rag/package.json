@@ -1,0 +1,21 @@
+{
+  "name": "pet-project-rte-rag",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "infra": "bash ./bin/start.sh mongo redis mongo-replicator",
+    "turbo-start": "npx turbo run development",
+    "docker": "bash ./bin/start.sh",
+    "start": "bash ./bin/run-all.sh"
+  },
+  "devDependencies": {
+    "husky": "9.0.11",
+    "turbo": "2.5.4"
+  },
+  "engines": {
+    "node": ">= 22.13.0"
+  }
+}
